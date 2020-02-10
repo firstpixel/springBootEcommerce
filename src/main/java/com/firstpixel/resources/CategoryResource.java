@@ -26,4 +26,10 @@ public class CategoryResource {
 		
 		return list;
 	}
+	
+	public Category find(Integer id) { 
+		Optional<Category> obj = repo.findById(id); return obj.orElse(null);
+	}
+	
+	
 }
