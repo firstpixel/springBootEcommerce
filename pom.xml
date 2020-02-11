@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.firstpixel.appmensagens</groupId>
-	<artifactId>appmensagem</artifactId>
+	<artifactId>appecommerce</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>AppMensagens</name>
-	<description>Aplicativo de mensagens</description>
+	<name>AppEcommerce</name>
+	<description>Aplicativo de ecommerce</description>
 
 	<properties>
 		<java.version>1.8</java.version>

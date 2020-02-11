@@ -19,7 +19,7 @@ import com.firstpixel.repositories.ProductRepository;
 import com.firstpixel.repositories.StateRepository;
 
 @SpringBootApplication
-public class AppMensagensApplication implements CommandLineRunner {
+public class AppEcommerceApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
@@ -36,7 +36,7 @@ public class AppMensagensApplication implements CommandLineRunner {
 	
 
 	public static void main(String[] args) {
-		SpringApplication.run(AppMensagensApplication.class, args);
+		SpringApplication.run(AppEcommerceApplication.class, args);
 	}
 
 	@Override
