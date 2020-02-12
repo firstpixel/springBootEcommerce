@@ -1,15 +1,11 @@
 package com.firstpixel.repositories;
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.firstpixel.domain.Category;
+import com.firstpixel.domain.Customer;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
-	
-	
-	
 }

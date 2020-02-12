@@ -9,12 +9,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.firstpixel.domain.Address;
 import com.firstpixel.domain.Category;
 import com.firstpixel.domain.City;
+import com.firstpixel.domain.Customer;
 import com.firstpixel.domain.Product;
 import com.firstpixel.domain.State;
+import com.firstpixel.domain.enums.CustomerType;
+import com.firstpixel.repositories.AddressRepository;
 import com.firstpixel.repositories.CategoryRepository;
 import com.firstpixel.repositories.CityRepository;
+import com.firstpixel.repositories.CustomerRepository;
 import com.firstpixel.repositories.ProductRepository;
 import com.firstpixel.repositories.StateRepository;
 
@@ -32,6 +37,12 @@ public class AppEcommerceApplication implements CommandLineRunner {
 	
 	@Autowired
 	private StateRepository stateRepository;
+	
+	@Autowired
+	private CustomerRepository customerRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
 	
 	
 
@@ -76,7 +87,22 @@ public class AppEcommerceApplication implements CommandLineRunner {
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
+		Customer client1 = new Customer(null, "Gil Beyruth", "gil@email.com", "25393364857", CustomerType.INDIVIDUAL);
+		client1.getPhones().addAll(Arrays.asList("11991020046","1149120308"));
 		
+		Address address1 = new Address(null, "Rua Flores", "", "234", "apto120", "Parque Imperial", "02304020", client1, c1);
+		Address address2 = new Address(null, "R Conego Vicente Miguel Marino", "", "91", "apto1710", "Barra Funda", "01135020", client1, c2);
+		client1.getAddresses().addAll(Arrays.asList(address1, address2));
+		
+		
+		Customer client2 = new Customer(null, "Maria Silva", "maria@gmail.com", "36378912377", CustomerType.INDIVIDUAL);
+		client2.getPhones().addAll(Arrays.asList("11991010036","1149120308"));
+		
+		Address address3 = new Address(null, "Rua Augusta", "", "123", "apto120", "Bela Vista", "01135020", client2, c2);
+		client2.getAddresses().addAll(Arrays.asList(address3));
+		
+		customerRepository.saveAll(Arrays.asList(client1, client2));
+		addressRepository.saveAll(Arrays.asList(address1, address2, address3));
 	}
 
 }
