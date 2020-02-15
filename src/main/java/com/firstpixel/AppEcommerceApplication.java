@@ -1,5 +1,6 @@
 package com.firstpixel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,13 +14,20 @@ import com.firstpixel.domain.Address;
 import com.firstpixel.domain.Category;
 import com.firstpixel.domain.City;
 import com.firstpixel.domain.Customer;
+import com.firstpixel.domain.CustomerOrder;
+import com.firstpixel.domain.Payment;
+import com.firstpixel.domain.PaymentCard;
+import com.firstpixel.domain.PaymentSlip;
 import com.firstpixel.domain.Product;
 import com.firstpixel.domain.State;
 import com.firstpixel.domain.enums.CustomerType;
+import com.firstpixel.domain.enums.PaymentState;
 import com.firstpixel.repositories.AddressRepository;
 import com.firstpixel.repositories.CategoryRepository;
 import com.firstpixel.repositories.CityRepository;
 import com.firstpixel.repositories.CustomerRepository;
+import com.firstpixel.repositories.OrderRepository;
+import com.firstpixel.repositories.PaymentRepository;
 import com.firstpixel.repositories.ProductRepository;
 import com.firstpixel.repositories.StateRepository;
 
@@ -43,6 +51,12 @@ public class AppEcommerceApplication implements CommandLineRunner {
 	
 	@Autowired
 	private AddressRepository addressRepository;
+	
+	@Autowired
+	private OrderRepository orderRepository;
+	
+	@Autowired
+	private PaymentRepository paymentRepository;
 	
 	
 
@@ -103,6 +117,24 @@ public class AppEcommerceApplication implements CommandLineRunner {
 		
 		customerRepository.saveAll(Arrays.asList(client1, client2));
 		addressRepository.saveAll(Arrays.asList(address1, address2, address3));
+		
+		SimpleDateFormat stf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		
+		
+		CustomerOrder order1 = new CustomerOrder(null, stf.parse("30/09/2019 18:32"), client1, address1);
+		CustomerOrder order2 = new CustomerOrder(null, stf.parse("22/02/2020 14:02"), client1, address2);
+		
+		Payment payment1 = new PaymentCard(null, PaymentState.PAYED, order1, 1);
+		order1.setPayment(payment1);
+		
+		Payment payment2 = new PaymentSlip(null, PaymentState.PENDING, order2, stf.parse("22/02/2020 14:02"), null);
+		order2.setPayment(payment2);
+		
+		
+		client1.getOrderList().addAll(Arrays.asList(order1, order2));
+		
+		orderRepository.saveAll(Arrays.asList(order1, order2 ));
 	}
 
 }
