@@ -17,7 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.firstpixel.domain.enums.CustomerType;
 
 
@@ -35,7 +35,6 @@ public class Customer implements Serializable{
 	private String cpfOrCnpj;
 	private Integer type;
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
 	private List<Address> addresses = new ArrayList<>();
 	
@@ -43,7 +42,7 @@ public class Customer implements Serializable{
 	@CollectionTable(name="PHONE")
 	private Set<String> phones = new HashSet<>();
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy="customer")
 	private List<OrderData> orderList = new ArrayList<>();
 	
