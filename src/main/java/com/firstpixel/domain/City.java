@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -38,7 +37,6 @@ public class City implements Serializable{
 		this.state = state;
 	}
 	
-	
 	public Integer getId() {
 		return id;
 	}
@@ -62,7 +60,6 @@ public class City implements Serializable{
 	public void setState(State state) {
 		this.state = state;
 	}
-
 
 	@Override
 	public int hashCode() {

@@ -14,7 +14,8 @@ import com.firstpixel.domain.Address;
 import com.firstpixel.domain.Category;
 import com.firstpixel.domain.City;
 import com.firstpixel.domain.Customer;
-import com.firstpixel.domain.CustomerOrder;
+import com.firstpixel.domain.OrderData;
+import com.firstpixel.domain.OrderItem;
 import com.firstpixel.domain.Payment;
 import com.firstpixel.domain.PaymentCard;
 import com.firstpixel.domain.PaymentSlip;
@@ -26,7 +27,8 @@ import com.firstpixel.repositories.AddressRepository;
 import com.firstpixel.repositories.CategoryRepository;
 import com.firstpixel.repositories.CityRepository;
 import com.firstpixel.repositories.CustomerRepository;
-import com.firstpixel.repositories.OrderRepository;
+import com.firstpixel.repositories.OrderDataRepository;
+import com.firstpixel.repositories.OrderItemRepository;
 import com.firstpixel.repositories.PaymentRepository;
 import com.firstpixel.repositories.ProductRepository;
 import com.firstpixel.repositories.StateRepository;
@@ -53,10 +55,13 @@ public class AppEcommerceApplication implements CommandLineRunner {
 	private AddressRepository addressRepository;
 	
 	@Autowired
-	private OrderRepository orderRepository;
+	private OrderDataRepository orderDataRepository;
 	
 	@Autowired
 	private PaymentRepository paymentRepository;
+
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	
 
@@ -122,8 +127,8 @@ public class AppEcommerceApplication implements CommandLineRunner {
 		
 		
 		
-		CustomerOrder order1 = new CustomerOrder(null, stf.parse("30/09/2019 18:32"), client1, address1);
-		CustomerOrder order2 = new CustomerOrder(null, stf.parse("22/02/2020 14:02"), client1, address2);
+		OrderData order1 = new OrderData(null, stf.parse("30/09/2019 18:32"), client1, address1);
+		OrderData order2 = new OrderData(null, stf.parse("22/02/2020 14:02"), client1, address2);
 		
 		Payment payment1 = new PaymentCard(null, PaymentState.PAYED, order1, 1);
 		order1.setPayment(payment1);
@@ -134,7 +139,24 @@ public class AppEcommerceApplication implements CommandLineRunner {
 		
 		client1.getOrderList().addAll(Arrays.asList(order1, order2));
 		
-		orderRepository.saveAll(Arrays.asList(order1, order2 ));
+		orderDataRepository.saveAll(Arrays.asList(order1, order2 ));
+		paymentRepository.saveAll(Arrays.asList(payment1,payment2));
+		
+		
+		OrderItem orderItem1 = new OrderItem(order1, p1, 0.00, 1, 2000.00 );
+		OrderItem orderItem2 = new OrderItem(order1, p3, 0.00, 2, 80.00);
+		OrderItem orderItem3 = new OrderItem(order2, p2, 100.00, 1, 800.00);
+		
+		order1.getOrderItems().addAll(Arrays.asList(orderItem1, orderItem2));
+		order2.getOrderItems().addAll(Arrays.asList(orderItem3));
+		
+		p1.getOrderItems().addAll(Arrays.asList(orderItem1));
+		p2.getOrderItems().addAll(Arrays.asList(orderItem3));
+		p3.getOrderItems().addAll(Arrays.asList(orderItem2));
+		
+		
+		orderItemRepository.saveAll(Arrays.asList(orderItem1,orderItem2, orderItem3));
+		
 	}
 
 }

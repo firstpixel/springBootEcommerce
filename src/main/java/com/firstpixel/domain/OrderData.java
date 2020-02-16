@@ -2,6 +2,8 @@ package com.firstpixel.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,10 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class CustomerOrder implements Serializable{
+public class OrderData implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -22,7 +25,7 @@ public class CustomerOrder implements Serializable{
 	private Integer id;
 	private Date instant;
 	
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="customerOrder")
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="orderData")
 	private Payment payment;
 	
 	@ManyToOne
@@ -33,11 +36,16 @@ public class CustomerOrder implements Serializable{
 	@JoinColumn(name="delivery_address_id")
 	private Address deliveryAddress;
 	
-	public CustomerOrder() {
+	
+	@OneToMany(mappedBy="id.orderData")
+	private Set<OrderItem> orderItems = new HashSet<>();
+	
+	
+	public OrderData() {
 		
 	}
 
-	public CustomerOrder(Integer id, Date instant,  Customer customer, Address deliveryAddress) {
+	public OrderData(Integer id, Date instant,  Customer customer, Address deliveryAddress) {
 		super();
 		this.id = id;
 		this.instant = instant;
@@ -85,6 +93,14 @@ public class CustomerOrder implements Serializable{
 		this.deliveryAddress = deliveryAddress;
 	}
 	
+	public Set<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(Set<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -101,7 +117,7 @@ public class CustomerOrder implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CustomerOrder other = (CustomerOrder) obj;
+		OrderData other = (OrderData) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
