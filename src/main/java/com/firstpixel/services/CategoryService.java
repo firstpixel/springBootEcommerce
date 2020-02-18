@@ -1,5 +1,6 @@
 package com.firstpixel.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,9 @@ public class CategoryService  {
 		} catch(DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Not possible to exclude a category that contains products.");
 		}
+	}
+	
+	public List<Category> findAll() { 
+		return repo.findAll(); 
 	}
 }
